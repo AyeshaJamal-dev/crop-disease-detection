@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Home - Crop Disease Detection{% endblock %}
+{% block content %}
+<div class="row align-items-center min-vh-50 py-5">
+    <div class="col-lg-6">
+        <h1 class="display-4 fw-bold text-success mb-4">Intelligent Crop Disease Detection</h1>
+        <p class="lead mb-4">
+            Upload a leaf image and get AI-powered disease detection with treatment recommendations.
+            Help farmers identify plant diseases early and protect their crops.
+        </p>
+        <div class="d-flex gap-3">
+            <a href="{{ url_for('register') }}" class="btn btn-success btn-lg">Get Started</a>
+            <a href="{{ url_for('login') }}" class="btn btn-outline-success btn-lg">Login</a>
+        </div>
+    </div>
+    <div class="col-lg-6 text-center">
+        <div class="bg-light rounded-circle d-inline-flex p-5">
+            <span class="display-1">🌾</span>
+        </div>
+    </div>
+</div>
+<div class="row mt-5">
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">Upload Image</h5>
+                <p class="card-text">Upload a clear photo of a plant leaf for instant analysis.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">AI Detection</h5>
+                <p class="card-text">Our CNN model detects diseases with over 90% accuracy.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">Treatment Guide</h5>
+                <p class="card-text">Get tailored treatment and prevention recommendations.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

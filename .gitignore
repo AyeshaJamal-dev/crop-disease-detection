@@ -1,0 +1,131 @@
+# ==========================================
+# Virtual Environments - Exclude
+# ==========================================
+venv/
+venv310/
+env/
+ENV/
+.venv
+venv*/
+
+# ==========================================
+# Python Cache & Compiled Files - Exclude
+# ==========================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.installed.cfg
+*.egg
+dist/
+build/
+develop-eggs/
+.eggs/
+lib/
+lib64/
+
+# ==========================================
+# Environment Variables - Exclude (User creates)
+# ==========================================
+.env
+.env.local
+.env.*.local
+.env.example
+
+# ==========================================
+# IDE & Editor - Exclude
+# ==========================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+.project
+.pydevproject
+.settings/
+*.sublime-project
+*.sublime-workspace
+
+# ==========================================
+# Testing - Exclude
+# ==========================================
+.tox/
+.coverage
+.coverage.*
+.cache
+.pytest_cache/
+nosetests.xml
+coverage.xml
+
+# ==========================================
+# Database - Exclude (User creates)
+# ==========================================
+*.db
+*.sqlite
+*.sqlite3
+
+# ==========================================
+# OS Files - Exclude
+# ==========================================
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# ==========================================
+# Project-Specific - Large Files to Exclude
+# ==========================================
+
+# User Uploads
+static/uploads/
+static/uploads/*
+
+# Dataset (2GB+ - User downloads via script)
+datasets/
+datasets/raw/
+datasets/raw/*
+datasets/train/
+datasets/train/*
+datasets/test/
+datasets/test/*
+
+# Pre-trained Models (User downloads via script)
+*.h5
+*.keras
+models/*.h5
+models/*.keras
+models/saved_model/
+models/saved_model/*
+models/plant_disease_model.h5
+
+# ==========================================
+# Logs & Temporary Files - Exclude
+# ==========================================
+*.log
+*.pot
+*.tmp
+*.temp
+
+# ==========================================
+# Jupyter Notebook - Exclude
+# ==========================================
+.ipynb_checkpoints
+*.ipynb
+
+# ==========================================
+# macOS Specific - Exclude
+# ==========================================
+.AppleDouble
+.LSOverride
+._*
+
+# ==========================================
+# Windows Specific - Exclude
+# ==========================================
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.h5

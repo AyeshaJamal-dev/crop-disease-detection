@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Diseases - Admin{% endblock %}
+{% block content %}
+<h2 class="mb-4">Disease Knowledge Base</h2>
+<a href="{{ url_for('admin_disease_add') }}" class="btn btn-success mb-3">Add Disease</a>
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Disease</th>
+                <th>Crop</th>
+                <th>Severity</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for d in diseases %}
+            <tr>
+                <td>{{ d.disease_id }}</td>
+                <td>{{ d.disease_name.replace('___', ' - ').replace('_', ' ') }}</td>
+                <td>{{ d.crop_type }}</td>
+                <td><span class="badge bg-{{ 'success' if d.severity_level == 'low' else 'warning' if d.severity_level == 'medium' else 'danger' }}">{{ d.severity_level }}</span></td>
+                <td>
+                    <a href="{{ url_for('admin_disease_edit', disease_id=d.disease_id) }}" class="btn btn-sm btn-outline-primary">Edit</a>
+                    <form method="POST" action="{{ url_for('admin_disease_delete', disease_id=d.disease_id) }}" class="d-inline" onsubmit="return confirm('Delete this disease?');">
+                        <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

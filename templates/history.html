@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}History - Crop Disease Detection{% endblock %}
+{% block content %}
+<h2 class="mb-4">Detection History</h2>
+{% if predictions %}
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Crop</th>
+                <th>Prediction</th>
+                <th>Confidence</th>
+                <th>Status</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in predictions %}
+            <tr>
+                <td>{{ p.prediction_date.strftime('%Y-%m-%d %H:%M') if p.prediction_date else '-' }}</td>
+                <td>{{ p.crop_type }}</td>
+                <td>{{ p.predicted_disease.replace('___', ' - ').replace('_', ' ') }}</td>
+                <td>{{ p.confidence_score }}%</td>
+                <td><span class="badge bg-{{ 'success' if p.status == 'healthy' else 'warning' }}">{{ p.status }}</span></td>
+                <td><a href="{{ url_for('results', prediction_id=p.prediction_id) }}" class="btn btn-sm btn-outline-success">View</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<p class="text-muted">No predictions yet. <a href="{{ url_for('upload') }}">Upload your first image</a>.</p>
+{% endif %}
+{% endblock %}

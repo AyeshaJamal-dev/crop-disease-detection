@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Model Metrics - Admin{% endblock %}
+{% block content %}
+<h2 class="mb-4">Model Metrics</h2>
+{% if metrics %}
+<div class="row mb-4">
+    {% for m in metrics %}
+    <div class="col-md-4 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <h6 class="card-subtitle text-muted">{{ m.training_date }}</h6>
+                <p class="mb-0">Accuracy: {{ "%.2f"|format(m.accuracy|float * 100) }}%</p>
+                <p class="mb-0">Precision: {{ "%.2f"|format(m.precision_score|float * 100) }}%</p>
+                <p class="mb-0">Recall: {{ "%.2f"|format(m.recall_score|float * 100) }}%</p>
+                <p class="mb-0">F1: {{ "%.2f"|format(m.f1_score|float * 100) }}%</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">Confusion Matrix</div>
+            <div class="card-body text-center">
+                <img src="{{ url_for('static', filename='images/confusion_matrix.png') }}" alt="Confusion Matrix" class="img-fluid" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                <p class="text-muted d-none">No confusion matrix available. Run training first.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">Training Curves</div>
+            <div class="card-body text-center">
+                <img src="{{ url_for('static', filename='images/training_curves.png') }}" alt="Training Curves" class="img-fluid" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                <p class="text-muted d-none">No training curves available.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% else %}
+<p class="text-muted">No model metrics recorded. Run training to populate.</p>
+{% endif %}
+{% endblock %}

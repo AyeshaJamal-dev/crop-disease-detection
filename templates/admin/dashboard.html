@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard - Crop Disease Detection{% endblock %}
+{% block content %}
+<h2 class="mb-4">Admin Dashboard</h2>
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card bg-primary text-white">
+            <div class="card-body">
+                <h5 class="card-title">Total Users</h5>
+                <p class="display-4">{{ user_count }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card bg-success text-white">
+            <div class="card-body">
+                <h5 class="card-title">Total Predictions</h5>
+                <p class="display-4">{{ pred_count }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card bg-info text-white">
+            <div class="card-body">
+                <h5 class="card-title">Model Accuracy</h5>
+                <p class="display-4">{% if metrics %}{{ "%.1f"|format(metrics.accuracy|float * 100) }}%{% else %}N/A{% endif %}</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">Quick Links</div>
+            <div class="card-body">
+                <a href="{{ url_for('admin_metrics') }}" class="btn btn-outline-primary me-2 mb-2">Model Metrics</a>
+                <a href="{{ url_for('admin_predictions') }}" class="btn btn-outline-primary me-2 mb-2">All Predictions</a>
+                <a href="{{ url_for('admin_users') }}" class="btn btn-outline-primary me-2 mb-2">Users</a>
+                <a href="{{ url_for('admin_diseases') }}" class="btn btn-outline-primary me-2 mb-2">Diseases</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">Latest Model Metrics</div>
+            <div class="card-body">
+                {% if metrics %}
+                <p>Accuracy: {{ "%.2f"|format(metrics.accuracy|float * 100) }}%</p>
+                <p>Precision: {{ "%.2f"|format(metrics.precision_score|float * 100) }}%</p>
+                <p>Recall: {{ "%.2f"|format(metrics.recall_score|float * 100) }}%</p>
+                <p>F1 Score: {{ "%.2f"|format(metrics.f1_score|float * 100) }}%</p>
+                <p class="text-muted small">Trained: {{ metrics.training_date }}</p>
+                {% else %}
+                <p class="text-muted">No metrics yet. Run training to populate.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}Results - Crop Disease Detection{% endblock %}
+{% block content %}
+<h2 class="mb-4">Detection Results</h2>
+<div class="row">
+    <div class="col-md-5">
+        <div class="card">
+            <div class="card-header">Uploaded Image</div>
+            <div class="card-body text-center">
+                <img src="{{ url_for('static', filename=prediction.image_path) }}" alt="Leaf" class="img-fluid rounded">
+            </div>
+        </div>
+        <div class="card mt-3">
+            <div class="card-header">Prediction</div>
+            <div class="card-body">
+                <p><strong>Disease:</strong> {{ prediction.predicted_disease.replace('___', ' - ').replace('_', ' ') }}</p>
+                <p><strong>Confidence:</strong> {{ prediction.confidence_score }}%</p>
+                <p><strong>Crop:</strong> {{ prediction.crop_type }}</p>
+                <p><strong>Status:</strong> <span class="badge bg-{{ 'success' if prediction.status == 'healthy' else 'warning' }}">{{ prediction.status }}</span></p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-7">
+        <div class="card">
+            <div class="card-header">Treatment & Prevention</div>
+            <div class="card-body">
+                {% if disease_info %}
+                    {% if disease_info.description %}<p><strong>Description:</strong> {{ disease_info.description }}</p>{% endif %}
+                    {% if disease_info.symptoms %}<p><strong>Symptoms:</strong> {{ disease_info.symptoms }}</p>{% endif %}
+                    {% if disease_info.causes %}<p><strong>Causes:</strong> {{ disease_info.causes }}</p>{% endif %}
+                    {% if disease_info.treatment %}<p><strong>Treatment:</strong> {{ disease_info.treatment }}</p>{% endif %}
+                    {% if disease_info.prevention %}<p><strong>Prevention:</strong> {{ disease_info.prevention }}</p>{% endif %}
+                    {% if disease_info.severity_level %}<p><strong>Severity:</strong> {{ disease_info.severity_level }}</p>{% endif %}
+                {% else %}
+                    <p class="text-muted">No detailed information available for this condition. Consult an agricultural expert.</p>
+                {% endif %}
+            </div>
+        </div>
+        <div class="card mt-3">
+            <div class="card-header">Rate this prediction</div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('feedback', prediction_id=prediction.prediction_id) }}">
+                    <div class="mb-2">
+                        <label class="form-label">Accuracy (1-5)</label>
+                        <select name="accuracy_rating" class="form-select" style="max-width:100px">
+                            <option value="">--</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label">Feedback (optional)</label>
+                        <textarea name="feedback" class="form-control" rows="2"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-success">Submit Feedback</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="mt-3">
+    <a href="{{ url_for('upload') }}" class="btn btn-outline-success">Upload Another</a>
+    <a href="{{ url_for('history') }}" class="btn btn-outline-secondary">View History</a>
+</div>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Predictions - Admin{% endblock %}
+{% block content %}
+<h2 class="mb-4">All Predictions</h2>
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>User</th>
+                <th>Date</th>
+                <th>Crop</th>
+                <th>Prediction</th>
+                <th>Confidence</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in predictions %}
+            <tr>
+                <td>{{ p.prediction_id }}</td>
+                <td>{{ p.full_name or p.email }}</td>
+                <td>{{ p.prediction_date.strftime('%Y-%m-%d %H:%M') if p.prediction_date else '-' }}</td>
+                <td>{{ p.crop_type }}</td>
+                <td>{{ p.predicted_disease.replace('___', ' - ').replace('_', ' ') }}</td>
+                <td>{{ p.confidence_score }}%</td>
+                <td><span class="badge bg-{{ 'success' if p.status == 'healthy' else 'warning' }}">{{ p.status }}</span></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% if pages > 1 %}
+<nav>
+    <ul class="pagination">
+        {% for i in range(1, pages + 1) %}
+        <li class="page-item {{ 'active' if i == page else '' }}">
+            <a class="page-link" href="{{ url_for('admin_predictions', page=i) }}">{{ i }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</nav>
+{% endif %}
+<p class="text-muted">Total: {{ total }} predictions</p>
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Upload - Crop Disease Detection{% endblock %}
+{% block content %}
+<h2 class="mb-4">Upload Leaf Image</h2>
+<div class="card shadow">
+    <div class="card-body p-5">
+        <form id="uploadForm" method="POST" action="{{ url_for('upload') }}" enctype="multipart/form-data">
+            <div class="upload-zone border border-2 border-dashed rounded p-5 text-center" id="uploadZone">
+                <input type="file" name="file" id="fileInput" accept=".jpg,.jpeg,.png,.jpe" class="d-none">
+                <p class="mb-2">Drag and drop your leaf image here, or click to browse</p>
+                <p class="text-muted small">JPG, PNG (max 5MB)</p>
+            </div>
+            <div id="preview" class="mt-3 text-center d-none"></div>
+            <div class="progress mt-3 d-none" id="progressBar">
+                <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 0%"></div>
+            </div>
+            <div class="mt-3 text-center">
+                <button type="submit" class="btn btn-success btn-lg" id="submitBtn" disabled>Analyze Image</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const zone = document.getElementById('uploadZone');
+    const input = document.getElementById('fileInput');
+    const preview = document.getElementById('preview');
+    const submitBtn = document.getElementById('submitBtn');
+
+    zone.addEventListener('click', () => input.click());
+    zone.addEventListener('dragover', (e) => { e.preventDefault(); zone.classList.add('border-success', 'bg-light'); });
+    zone.addEventListener('dragleave', () => { zone.classList.remove('border-success', 'bg-light'); });
+    zone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        zone.classList.remove('border-success', 'bg-light');
+        if (e.dataTransfer.files.length) input.files = e.dataTransfer.files;
+        handleFile(input.files[0]);
+    });
+    input.addEventListener('change', () => handleFile(input.files[0]));
+
+    function handleFile(file) {
+        if (!file) return;
+        if (!['image/jpeg','image/png','image/jpg'].includes(file.type)) {
+            alert('Please select a JPG or PNG image.');
+            return;
+        }
+        preview.classList.remove('d-none');
+        preview.innerHTML = '<img src="' + URL.createObjectURL(file) + '" class="img-thumbnail" style="max-height:200px">';
+        submitBtn.disabled = false;
+    }
+});
+</script>
+{% endblock %}
