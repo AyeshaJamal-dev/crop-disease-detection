@@ -309,17 +309,4 @@ Contributions are welcome! To contribute:
 
 ---
 
-## 📝 License
-
-This project is open source and available under the MIT License.
-
----
-
-## 📞 Support
-
-- **Issues**: [GitHub Issues](https://github.com/YourUsername/crop-disease-detection/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/YourUsername/crop-disease-detection/discussions)
-
----
-
 **Last Updated**: May 2026 | **Version**: 1.0
